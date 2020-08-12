@@ -681,13 +681,10 @@ public class Teleport_Handtracking : MonoBehaviour
             teleportPointerObject.SetActive(false);
             teleportArc.Show();
 
-            Debug.Log($"Number of markers: {teleportMarkers.Length}");
             foreach (TeleportMarkerBase teleportMarker in teleportMarkers)
             {
-                Debug.Log("Check TeleportMarker");
                 if (teleportMarker.markerActive && teleportMarker.ShouldActivate(player.feetPositionGuess))
                 {
-                    Debug.Log("ACTIVATE");
                     teleportMarker.gameObject.SetActive(true);
                     teleportMarker.Highlight(false);
                 }

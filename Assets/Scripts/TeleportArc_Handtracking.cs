@@ -99,6 +99,10 @@ public class TeleportArc_Handtracking : MonoBehaviour
     //-------------------------------------------------
     public void SetArcData(Vector3 position, Vector3 velocity, bool gravity, bool pointerAtBadAngle)
     {
+        Vector3 correction = velocity.normalized / 7.5f;
+        position += correction;
+
+
         startPos = position;
         projectileVelocity = velocity;
         useGravity = gravity;
