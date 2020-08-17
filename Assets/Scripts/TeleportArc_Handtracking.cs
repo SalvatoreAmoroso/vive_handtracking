@@ -99,11 +99,9 @@ public class TeleportArc_Handtracking : MonoBehaviour
     //-------------------------------------------------
     public void SetArcData(Vector3 position, Vector3 velocity, bool gravity, bool pointerAtBadAngle)
     {
-        Vector3 correction = velocity.normalized / 7.5f;
-        position += correction;
+        Vector3 correction = velocity.normalized / 7.5f; //Damit der Bogen weiter weg von der hand startet
+        startPos = position + correction;
 
-
-        startPos = position;
         projectileVelocity = velocity;
         useGravity = gravity;
 

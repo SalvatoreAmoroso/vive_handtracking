@@ -31,6 +31,7 @@ namespace ViveHandTracking.Sample
 
         private void Update()
         {
+            if (GestureProvider.LeftHand == null || GestureProvider.RightHand == null) return;
             if (state == 0)
                 return;
             Cursor.position = (GestureProvider.LeftHand.position + GestureProvider.RightHand.position) / 2;
@@ -46,7 +47,7 @@ namespace ViveHandTracking.Sample
             LayerMask mask = LayerMask.GetMask("Default");
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, Mathf.Infinity, mask))
             {
-                if (candidate == hit.collider.GetComponent<Renderer>())
+                if (candidate == hit.collider.GetComponent<Renderer>() || hit.collider.GetComponent<Rigidbody>() == null)
                     return;
                 SetCandidate(hit.collider);
             }

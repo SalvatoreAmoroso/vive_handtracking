@@ -14,6 +14,7 @@ public class Teleport_Handtracking : MonoBehaviour
     public GameObject leftHand;
     public GameObject rightHand;
 
+
     public LayerMask traceLayerMask;
     public LayerMask floorFixupTraceLayerMask;
     public float floorFixupMaximumTraceDistance = 1.0f;
@@ -238,7 +239,6 @@ public class Teleport_Handtracking : MonoBehaviour
         {
             if (WasTeleportTriggered(pointerHand))
             {
-                Debug.Log("TRY TELEPORT");
                 TryTeleportPlayer();
             }
         }
@@ -967,18 +967,9 @@ public class Teleport_Handtracking : MonoBehaviour
     //-------------------------------------------------
     private Transform GetPointerStartTransform(bool left)
     {
-        Transform transform = rightHand.transform;
         if (left)
-            transform = leftHand.transform;
-
-
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float z = transform.position.z;
-
-        transform.position = new Vector3(0, 0, 0);
-
-        return transform;
+            return leftHand.transform;
+        return rightHand.transform;
     }
 
 }

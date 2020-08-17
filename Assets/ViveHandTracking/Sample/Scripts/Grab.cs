@@ -31,9 +31,7 @@ namespace ViveHandTracking.Sample
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.gameObject.name.StartsWith("Cube"))
-                return;
-
+            if (other.tag != "DynamicObject") return;
             Rigidbody newTarget = other.GetComponent<Rigidbody>();
             if (newTarget == target)
             {
@@ -85,6 +83,7 @@ namespace ViveHandTracking.Sample
 
         private void StartMove()
         {
+            Debug.Log("START MOVE");
             target.useGravity = false;
             target.isKinematic = true;
             anchor.SetParent(target.transform.parent, true);
