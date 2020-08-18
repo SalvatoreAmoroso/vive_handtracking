@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
+//
+// Purpose: Handles all the teleport logic
+//
+//
+// Edited by: Salvatore Amoroso (amo_salvatore@web.de)
+// Changes: Support for Vive Handtracking SDK
+//=============================================================================
+
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,14 +16,21 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 using ViveHandTracking;
 
+
 public class Teleport_Handtracking : MonoBehaviour
 {
-
-    public SteamVR_Action_Boolean teleportAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Teleport");
-
+    // ==== HANDTRACKING ====
     public GameObject leftHand;
     public GameObject rightHand;
+    private GameObject pointerHand = null;
+    private bool isLeft = false;
+    private TeleportArc_Handtracking teleportArc = null;
+    private int state = 0;
+    [HideInInspector]
+    public bool teleportEnabled = true;
 
+    // ==== STEAM VR ====
+    public SteamVR_Action_Boolean teleportAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("Teleport");
 
     public LayerMask traceLayerMask;
     public LayerMask floorFixupTraceLayerMask;
@@ -68,10 +85,7 @@ public class Teleport_Handtracking : MonoBehaviour
     private LineRenderer pointerLineRenderer;
     private GameObject teleportPointerObject;
     private Transform pointerStartTransform;
-    private GameObject pointerHand = null;
-    private bool isLeft = false;
     private Player player = null;
-    private TeleportArc_Handtracking teleportArc = null;
 
     private bool visible = false;
 
@@ -110,7 +124,6 @@ public class Teleport_Handtracking : MonoBehaviour
     private bool movedFeetFarEnough = false;
     private SteamVR_Events.Action chaperoneInfoInitializedAction;
 
-    private int state = 0;
 
     // Events
 
@@ -235,6 +248,8 @@ public class Teleport_Handtracking : MonoBehaviour
     //-------------------------------------------------
     private void Update()
     {
+        if (!teleportEnabled) return;
+
         if (visible)
         {
             if (WasTeleportTriggered(pointerHand))

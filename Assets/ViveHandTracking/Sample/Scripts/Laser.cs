@@ -74,7 +74,7 @@ namespace ViveHandTracking.Sample
 
             if (hit != null)
                 StopHit();
-            Debug.Log($"Collided with: {other.name}");
+
             hit = other.GetComponent<Renderer>();
             if (hit != null)
             {
@@ -99,11 +99,16 @@ namespace ViveHandTracking.Sample
 
         private IEnumerator StartMagicalGrab()
         {
-            if (hit == null || magicalGrabActive) yield return null;
+            if (hit == null || magicalGrabActive)
+            {
+                Debug.Log("magical grab already active");
+                yield return null;
+            }
 
             magicalGrabActive = true;
             GestureResult hand = GestureProvider.RightHand;
             Vector3 dir = hand.position - hit.transform.position;
+
             while (hit != null && dir.sqrMagnitude > 1) //While object in laser and distance greater 1 meter
             {
                 dir = hand.position - hit.transform.position;

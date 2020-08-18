@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Environment
   - DynamicObject
+  - Fire
+  - projectile
+  - FxTemporaire
+  - ViveHands
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - 
   - Environment
   - Locked
-  - 
+  - Hands
   - 
   - 
   - 
